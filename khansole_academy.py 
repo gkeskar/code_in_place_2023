@@ -1,0 +1,110 @@
+import random
+CORRECT_ANSWER_COUNT = 3
+
+def main():
+    count_of_correct_answers = 0
+    # count num pf correct answers
+    # until user answers 3 correct ansers in a row do following
+    while correct_answers_in_row(count_of_correct_answers):
+        print("Khansole Academy")
+        # TODO: your code here
+        
+        operation = random_operation()
+        print(operation)
+        # randonmly generate 2 two digit numbers
+        input_nums = []
+        for i in range(2):
+            # TODO if operation is "-" check second num is < than first num
+            input_nums.append(generate_num())
+        # randonly choose operation
+        question_to_ask = question(operation, input_nums)
+        print(question_to_ask)
+        # print(question_to_ask %(input_nums[0], input_nums[1]))
+        # Ask user answer
+        # print("Your Answer: ")
+        # check user answer
+        if operation == "+":
+            correct_answer = sum(input_nums)
+        elif operation == "-":
+            correct_answer = substraction(input_nums)
+        elif operation == "*":
+            correct_answer = multiplication(input_nums)
+        elif operation == "*":
+            correct_answer = division(input_nums)
+        # match operation:
+        #     case "+":
+        #         correct_answer = sum(input_nums)
+        #     case "-":
+        #         correct_answer = substraction(input_nums)
+        #     case _:
+        #         print("Invalid operation.. Exiting")
+        #         break
+        answer = input("Your Answer: ")    
+        if is_answer_correct(answer, correct_answer):
+            # incremenmt count of correct answer
+            count_of_correct_answers += 1
+            print("Correct!\n You've gotten %d correct in a row." %count_of_correct_answers)
+        else:
+            # reset the count_of_correct_answers
+            count_of_correct_answers = 0
+            print("Incorrect.\nThe expected answer is %d" %correct_answer)
+        # else display incorrect
+    print("Congratulations! You mastered addition.")    
+
+def random_operation():
+    operations = ["+", "-", "*", "/"]
+    return random.choice(operations)
+    
+def correct_answers_in_row(correct_answer_count):
+    # input require num of answer, count of correct answers
+    # output true or fasle
+    return correct_answer_count != CORRECT_ANSWER_COUNT
+        
+def is_answer_correct(user_answer, correct_answer):
+    return int(user_answer) == correct_answer
+    
+def generate_num():
+    return random.randint(10, 99)
+
+def sum(nums):
+    sum = 0
+    for i in range(len(nums)):
+        sum += nums[i]
+    return sum
+
+def substraction(nums):
+    sub = 0
+    for i in range(len(nums)):
+        sub -= nums[i]
+    return sub
+    
+def multiplication(nums):
+    mul = 1
+    for i in range(len(nums)):
+        mul = mul * nums[i]
+    return mul
+    
+def division(nums):
+    div = nums[i] / nums[i+1]
+    return div   
+    
+def num_opetation_string(operation, numbers):
+    # input operation = "+"
+    # input numbers = [56,67,78]
+    # output : string with middle part of question
+    # output 56 + 67 + 78 for operation "+"
+    i = 0
+    str_output = ""
+    while  i < len(numbers) - 1: # len(numbers) - 1 = 2
+        str_output = str_output  + " " + str(numbers[i])
+        str_output = str_output + " " + operation 
+        i += 1
+    str_output =  str_output + " " + (str(numbers[-1]))
+    return str_output
+  
+def question(operation, numbers):
+    full_str = "What is " + num_opetation_string(operation, numbers) + "?"
+    return full_str
+
+if __name__ == '__main__':
+    main()
